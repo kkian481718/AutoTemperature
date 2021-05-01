@@ -34,51 +34,13 @@ import keep_alive
 # ----------身分證列表--------------
 IDcode = os.environ['IDcode_secret'].split(', ')
 
-print(IDcode)
-print(type(IDcode))
-print(len(IDcode))
-
-'''
-IDcode = [
-    'S125351915',  # 我
-    'E125735661',  # 永宏
-    #'T126055020',  # 柏輝
-    'E125416116',  # 軒霆
-    'E126125785',  # 承濬
-    'S125194643',  # 柏諭
-    'S125705486',  # 岱佑
-    'E126033915',  # 耀升
-    'E126212498',  # 亮亮
-    'S125717575',  # 品C
-    'S125281730',  # 甲佑
-    'E125481248',  # 伯旭
-    'S125739991',  # 凱奪
-    'E126217555',
-    'S125665487',
-    'E126162822',
-    'E126134060',
-    'S125540565',
-    'S125540609',
-    'E126213191',
-    'E125488907',
-    'F131743241',
-    'S125495743',
-    'E126119223',
-    'E126046538',
-    'E126166722',
-    'E126128491',
-    'E125736033',
-    'T170009903',
-    'S125717815'
-]
-'''
 # ---------------------------------
 
 # ------------姓名列表--------------
 nameList = [
     'Miffy',
     '永宏',
-    #'柏輝',
+    '柏輝',
     '軒霆',
     '承濬',
     '柏諭',
@@ -146,7 +108,7 @@ def checkTime():
     # ============================
 
     # === 判斷是不是假日 ===
-    if ((localtime_wday != 6) and (localtime_wday != 7)):
+    if ((localtime_wday != 7) and (localtime_wday != 7)):
 
         # === 判斷是不是6.~9. ===
         if ((localtime_hour >= 6) and (localtime_hour <= 24)):
@@ -201,6 +163,7 @@ def StartUpload():
     # 列清單:)
     LIST = "\n"
     for n in range(0, times, 1):
+
         LIST = LIST + "\t- " + IDcode[n] + "\t(" + nameList[n] + ")\n"
 
     sendLINE("今天要填的人有：Ｄ\n（共 " + str(times) + " 人）\n" + LIST)
@@ -323,8 +286,7 @@ def StartUpload():
 
             # 填身分證字號
             time.sleep(1)
-            search_input = driver.find_element_by_name(
-            "ctl00$ContentPlaceHolder1$txtId")
+            search_input = driver.find_element_by_name("ctl00$ContentPlaceHolder1$txtId")
             search_input.clear()
             search_input.send_keys(IDcode[n])
 
