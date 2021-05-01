@@ -11,6 +11,8 @@
 # repl.it x UptimeRobot
 # =====================
 
+import os
+
 import time
 import random
 
@@ -30,6 +32,13 @@ import keep_alive
 
 
 # ----------身分證列表--------------
+IDcode = os.environ['IDcode_secret'].split(', ')
+
+print(IDcode)
+print(type(IDcode))
+print(len(IDcode))
+
+'''
 IDcode = [
     'S125351915',  # 我
     'E125735661',  # 永宏
@@ -58,8 +67,11 @@ IDcode = [
     'E126046538',
     'E126166722',
     'E126128491',
-    'E125736033'
+    'E125736033',
+    'T170009903',
+    'S125717815'
 ]
+'''
 # ---------------------------------
 
 # ------------姓名列表--------------
@@ -91,7 +103,9 @@ nameList = [
     '大寮紅豆王',
     '雲甲',
     '您的回答',
-    '魯邦'
+    '魯邦',
+    '202 蘇家緯',
+    '沈廷翰：）'
 ]
 
 # ---------------------------------
@@ -156,15 +170,13 @@ def checkTime():
 # -------[副程式] 為了登入而登入--------
 def LoginForLogin():
 
-    search_input = driver.find_element_by_name(
-        "ctl00$ContentPlaceHolder1$txtId")
+    search_input = driver.find_element_by_name("ctl00$ContentPlaceHolder1$txtId")
     search_input.clear()
     search_input.send_keys('S125351915')
 
     # 按登入鍵
     start_search_btn = driver.find_element_by_name("ctl00$ContentPlaceHolder1$btnId")
     start_search_btn.click()
-
 
 # ------------------------------------
 
@@ -212,10 +224,10 @@ def StartUpload():
             #s1.select_by_index(3)
             
             # checkbox
-            checkbox = driver.find_element_by_id('ContentPlaceHolder1_CheckBoxList1_0')
-            checkbox.click()
-            checkbox = driver.find_element_by_id('ContentPlaceHolder1_CheckBoxList1_2')
-            checkbox.click()
+            #checkbox = driver.find_element_by_id('ContentPlaceHolder1_CheckBoxList1_0')
+            #checkbox.click()
+            #checkbox = driver.find_element_by_id('ContentPlaceHolder1_CheckBoxList1_2')
+            #checkbox.click()
             
             
             # ======== ↓↓驗證公式解↓↓ =========
