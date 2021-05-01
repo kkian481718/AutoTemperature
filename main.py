@@ -108,10 +108,10 @@ def checkTime():
     # ============================
 
     # === 判斷是不是假日 ===
-    if ((localtime_wday != 7) and (localtime_wday != 7)):
+    if ((localtime_wday != 6) and (localtime_wday != 7)):
 
         # === 判斷是不是6.~9. ===
-        if ((localtime_hour >= 6) and (localtime_hour <= 24)):
+        if ((localtime_hour >= 6) and (localtime_hour <= 8)):
             # 激活填報主程式
             StartUpload()
 
