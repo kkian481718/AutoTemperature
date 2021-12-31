@@ -30,44 +30,62 @@ from selenium.webdriver.chrome.options import Options
 # 讓程式自動喚醒 by UptimeRobot
 import keep_alive
 
+# ----------今天不要填我------------
+# 記得是從0開始編號 (Miffy = 0, 永宏 = 1)
+noMeList = [0, 3, 12, 31]
+
+# 
+# ---------------------------------
+
+# ----------今天我在家------------
+# 記得是從0開始編號 (Miffy = 0, 永宏 = 1)
+atHomeList = [0, 1, 3, 12, 31]
+
+# 米非, 永宏, 宣庭, 凱亦, 沛儒
+# ---------------------------------
+
 
 # ----------身分證列表--------------
 IDcode = os.environ['IDcode_secret'].split(', ')
 
 # ---------------------------------
 
+
 # ------------姓名列表--------------
 nameList = [
-    'Miffy',
-    '永宏',
-    '柏輝',
-    '軒霆',
-    '承濬',
-    '柏諭',
-    '岱佑',
-    '耀升',
-    '亮亮',
-    '品C',
-    '廖崇佑',
-    '鄭博旭',
-    '凱奪好電',
-    '邱建銘',
-    '蔡東宏',
-    '簡以安',
-    '張澄鎧',
-    '黃稟容',
-    '傅昱仁',
-    '黃楷竣',
-    '王翊臣(つˆДˆ)つ｡☆',
-    '謝博宇',
-    'Ian Chen',
-    '陳品睿',
-    '大寮紅豆王',
-    '雲甲',
-    '您的回答',
-    '魯邦',
-    '202 蘇家緯',
-    '沈廷翰：）'
+    '00 Miffy',
+    '01 永宏',
+    '02 柏輝',
+    '03 軒霆',
+    '04 承濬',
+    '05 柏諭',
+    '06 岱佑',
+    '07 耀升',
+    '08 亮亮',
+    '09 品C',
+    '10 廖崇佑',
+    '11 鄭博旭',
+    '12 凱奪好電',
+    '13 邱建銘',
+    '14 蔡東宏',
+    '15 簡以安',
+    '16 張澄鎧',
+    '17 黃稟容',
+    '18 傅昱仁',
+    '19 黃楷竣',
+    '20 王翊臣(つˆДˆ)つ｡☆',
+    '21 謝博宇',
+    '22 Ian Chen',
+    '23 陳品睿',
+    '24 大寮紅豆王',
+    '25 雲甲',
+    '26 遠割',
+    '27 魯邦',
+    '28 郭紘葦',
+    '29 沈廷翰：）',
+    '30 柯辰翰',
+    '31 李沛儒',
+    '32 黃羽良'
 ]
 
 # ---------------------------------
@@ -110,8 +128,8 @@ def checkTime():
     # === 判斷是不是假日 ===
     if ((localtime_wday != 6) and (localtime_wday != 7)):
 
-        # === 判斷是不是6.~9. ===
-        if ((localtime_hour >= 6) and (localtime_hour <= 8)):
+        # === 判斷是不是6.~7. ===
+        if ((localtime_hour >= 6) and (localtime_hour <= 7)):
             # 激活填報主程式
             StartUpload()
 
@@ -129,20 +147,6 @@ def checkTime():
 # ------------------------------------
 
 
-# -------[副程式] 為了登入而登入--------
-def LoginForLogin():
-
-    search_input = driver.find_element_by_name("ctl00$ContentPlaceHolder1$txtId")
-    search_input.clear()
-    search_input.send_keys('S125351915')
-
-    # 按登入鍵
-    start_search_btn = driver.find_element_by_name("ctl00$ContentPlaceHolder1$btnId")
-    start_search_btn.click()
-
-# ------------------------------------
-
-
 # ======================= [主程式] ========================
 def StartUpload():
 
@@ -155,16 +159,17 @@ def StartUpload():
     # 設定執行次數
     times = len(IDcode)
     
-    # 驗證答案和種類
-    MrRight = 0
-    MrRight_type = 0
+    # 公式解的答案和種類
+    # MrRight = 0
+    # MrRight_type = 0
 
 
     # 列清單:)
     LIST = "\n"
     for n in range(0, times, 1):
 
-        LIST = LIST + "\t- " + IDcode[n] + "\t(" + nameList[n] + ")\n"
+        if((n not in noMeList) or (n not in atHomeList)):
+            LIST = LIST + "\t- " + IDcode[n] + "\t(" + nameList[n] + ")\n"
 
     sendLINE("今天要填的人有：Ｄ\n（共 " + str(times) + " 人）\n" + LIST)
 
@@ -173,20 +178,25 @@ def StartUpload():
         
         LIST = ">> [ 正在填 " + IDcode[n] + "(" + nameList[n] + ") ]\n\n"
 
+        if(n in noMeList):
+
+            LIST = LIST + "[X] 今天不填！\n"
+            continue
+
         try:
             # 開啟網頁
             driver.get("https://webap1.kshs.kh.edu.tw/kshsSSO/publicWebAP/bodyTemp/index.aspx")
 
             
-            # radio
+            # 破解radio
             #radio = driver.find_element_by_id('ContentPlaceHolder1_RadioButtonList1_1')
             #radio.click()
             
-            # list
+            # 破解list
             #s1 = Select(driver.find_element_by_id('ContentPlaceHolder1_DropDownList1'))
             #s1.select_by_index(3)
             
-            # checkbox
+            # 破解checkbox
             #checkbox = driver.find_element_by_id('ContentPlaceHolder1_CheckBoxList1_0')
             #checkbox.click()
             #checkbox = driver.find_element_by_id('ContentPlaceHolder1_CheckBoxList1_2')
@@ -323,7 +333,15 @@ def StartUpload():
 
                 # 選擇差勤
                 s1 = Select(driver.find_element_by_id('ContentPlaceHolder1_ddl3'))
+
                 s1.select_by_index(1)
+
+                '''
+                # 請假的填法
+                if(n in noMeList):
+                    s1.select_by_index(3) #改這個數字
+                
+                '''
 
                 # 提交體溫
                 start_search_btn = driver.find_element_by_id("ContentPlaceHolder1_btnId0")
