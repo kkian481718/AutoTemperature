@@ -42,6 +42,7 @@ noMeList = [0, 3, 12, 31]
 atHomeList = [0, 1, 3, 12, 31]
 
 # 米非, 永宏, 宣庭, 凱亦, 沛儒
+# 沒用，記得改
 # ---------------------------------
 
 
@@ -129,7 +130,7 @@ def checkTime():
     if ((localtime_wday != 6) and (localtime_wday != 7)):
 
         # === 判斷是不是6.~7. ===
-        if ((localtime_hour >= 6) and (localtime_hour <= 7)):
+        if ((localtime_hour >= 6) and (localtime_hour <= 12)):
             # 激活填報主程式
             StartUpload()
 
@@ -176,11 +177,13 @@ def StartUpload():
     # [ 終於開始填 ]
     for n in range(0, times, 1):
         
-        LIST = ">> [ 正在填 " + IDcode[n] + "(" + nameList[n] + ") ]\n\n"
+        LIST = ">> [ 正在填 " + IDcode[n] + " ]\n"
+        LIST = LIST + "( " + nameList[n] + " )\n\n"
 
         if(n in noMeList):
 
             LIST = LIST + "[X] 今天不填！\n"
+            sendLINE(LIST)
             continue
 
         try:
@@ -340,6 +343,8 @@ def StartUpload():
                 # 請假的填法
                 if(n in noMeList):
                     s1.select_by_index(3) #改這個數字
+                else:
+                    s1.select_by_index(1)
                 
                 '''
 
