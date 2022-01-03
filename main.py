@@ -32,17 +32,16 @@ import keep_alive
 
 # ----------今天不要填我------------
 # 記得是從0開始編號 (Miffy = 0, 永宏 = 1)
-noMeList = [0, 3, 12, 31]
+noMeList = []
 
 # 
 # ---------------------------------
 
 # ----------今天我在家------------
 # 記得是從0開始編號 (Miffy = 0, 永宏 = 1)
-atHomeList = [0, 1, 3, 12, 31]
+atHomeList = [0, 1, 3, 5, 7, 10, 12, 25, 31, 33]
 
-# 米非, 永宏, 宣庭, 凱亦, 沛儒
-# 沒用，記得改
+# 米非, 永宏, 宣庭, 柏諭, 耀升, 廖崇佑, 雲甲, 凱奪, 沛儒, 威哥
 # ---------------------------------
 
 
@@ -86,7 +85,8 @@ nameList = [
     '29 沈廷翰：）',
     '30 柯辰翰',
     '31 李沛儒',
-    '32 黃羽良'
+    '32 黃羽良',
+    '33 劉宗威'
 ]
 
 # ---------------------------------
@@ -130,7 +130,7 @@ def checkTime():
     if ((localtime_wday != 6) and (localtime_wday != 7)):
 
         # === 判斷是不是6.~7. ===
-        if ((localtime_hour >= 6) and (localtime_hour <= 12)):
+        if ((localtime_hour >= 6) and (localtime_hour <= 7)):
             # 激活填報主程式
             StartUpload()
 
@@ -337,16 +337,13 @@ def StartUpload():
                 # 選擇差勤
                 s1 = Select(driver.find_element_by_id('ContentPlaceHolder1_ddl3'))
 
-                s1.select_by_index(1)
-
-                '''
                 # 請假的填法
-                if(n in noMeList):
-                    s1.select_by_index(3) #改這個數字
+                if(n in atHomeList):
+                    LIST = LIST + "差勤：請假！\n"
+                    s1.select_by_index(2) #改這個數字
                 else:
+                    LIST = LIST + "差勤：正常\n"
                     s1.select_by_index(1)
-                
-                '''
 
                 # 提交體溫
                 start_search_btn = driver.find_element_by_id("ContentPlaceHolder1_btnId0")
